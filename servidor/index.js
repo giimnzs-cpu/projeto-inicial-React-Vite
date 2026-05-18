@@ -1,6 +1,8 @@
 const express = require('express')
+import cors from 'cors'
 
 const servidor = express();
+servidor.use(cors())
 servidor.use(express.json())
 
 
@@ -23,13 +25,15 @@ servidor.post('/registros', (req, res) => {
     sucesso: true,
     mensagem: "Registro Criado com Sucesso!",
     dados: dados
-
   })
 
 })
 
  servidor.get('/registros', (req, res) => {
-    res.status(200).json(registros);
+    res.status(200).json({
+        mensagem: "Vamos nessa, Servidor no ar BEBE!",
+        status: "ok 100%"
+    });
  });
 
 servidor.listen(3000, () => {

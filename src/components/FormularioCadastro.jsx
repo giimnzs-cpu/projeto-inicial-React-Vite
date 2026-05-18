@@ -1,7 +1,7 @@
 import InputField from './InputField'
 import BotaoEnviar from './BotaoEnviar'
 import Contador from './Contador';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function FormularioCadastro() {
     // const [nome, setNome] = useState('')
@@ -14,6 +14,7 @@ function FormularioCadastro() {
 
     const handleSubmit = (e) => {
         e.preventDefault() // Não deixa carregar a página.
+
 
         if (user.nome.trim() === "") {
             setErro('O campo desse nome está sem nada, preencha!')
@@ -32,6 +33,21 @@ function FormularioCadastro() {
         setErro('')
         setSucesso(true)
         console.log(user)// Envio para o banco
+
+try{
+
+            const resposta = await fetch('http://localhost:3000/registros', {
+                method: 'POST',
+                headers:{'Content-Type': 'application/json'},
+                body: JSON.stringify({nome, email, telefone})
+})
+const resultado = resposta.json()
+console.log(resultado)
+}catch(error){
+    console.log('Erro ao conectar ao servidor', error)
+};
+
+
     }
     return (
 
@@ -76,4 +92,13 @@ function FormularioCadastro() {
 
     )
 }
+
+
+useEffect(() => {
+    fetch('http://localhost:3000/registros')
+    .then(res => res.json())
+    .then(dados => console.log(dados))
+}, [])
+
 export default FormularioCadastro;
+
