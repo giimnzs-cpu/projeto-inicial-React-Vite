@@ -8,7 +8,7 @@ export function useRegistros() {
     const [erro, setErro] = useState('')
 
     const buscar = async () => {
-        setCarregando(true)
+        setCarregamento(true)
         try {
             const res = await fetch(BASE_URL)
             const dados = await res.json()
@@ -16,13 +16,14 @@ export function useRegistros() {
         } catch {
             setErro('Erro ao carregar registros.')
         } finally {
-            setCarregando(false)
+            setCarregamento(false)
         }
 
-        useEffect(() => {
-            buscar()
-        }, [])
     }
+    useEffect(() => {
+            buscar()
+
+        }, [])
 
     const criar = async (dados) => {
         try{
@@ -54,6 +55,4 @@ export function useRegistros() {
     // O retorno, carregando, erro, buscar, criar, atualizar, deletar
     return {registros, carregamento, erro, criar, atualizar, deletar}
             
-    
-    return { registros, carregando, erro}
 }
